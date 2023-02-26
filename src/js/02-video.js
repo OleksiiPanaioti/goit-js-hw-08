@@ -1,29 +1,33 @@
 
 import Player from '@vimeo/player';
-
 import throttle from 'lodash.throttle';
+
+
+const STORAGE_KEY = 'videoplayer-current-time';
 
 const iframe = document.querySelector('iframe');
 const player = new Player(iframe);
 
-player.on('timeupdate', function (timeupdate) {
-    const dataTimeValue = localStorage.setItem('videoplayer-current-time', JSON.stringify(timeupdate))
-    // _.throttle('timeupdate', 10)
+player.on('timeupdate', throttle(getLocalStorageData, 500));
 
-})
+function getLocalStorageData(e) {
+    const stringData = JSON.stringify(e)
+    localStorage.setItem(STORAGE_KEY, stringData)
+}
 
 
 // беремо час після паузи
-    const timePaused = localStorage.getItem('videoplayer-current-time');
-const parsedTime = JSON.parse(timePaused);
-const secondsEl = parsedTime.seconds;
+const timePaused = localStorage.getItem(STORAGE_KEY);
     
+
+const parsedTime = JSON.parse(timePaused);
+
+const secondsEl = parsedTime.seconds;
+
 
 //починаємо відео з місця паузи після перезавантаження
 
 player.setCurrentTime(secondsEl).then(function(seconds) {
-// seconds = the actual time that the player seeked to
-
 
 }).catch(function(error) {
     switch (error.name) {
