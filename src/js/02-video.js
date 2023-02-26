@@ -27,17 +27,8 @@ const secondsEl = parsedTime.seconds;
 
 //починаємо відео з місця паузи після перезавантаження
 
-player.setCurrentTime(secondsEl).then(function(seconds) {
+player.setCurrentTime(secondsEl).then(function (seconds) {
 
-}).catch(function(error) {
-    switch (error.name) {
-        case 'RangeError':
-            // the time was less than 0 or greater than the video’s duration
-            break;
-
-        default:
-            // some other error occurred
-            break;
-    }
 });
+    
 
