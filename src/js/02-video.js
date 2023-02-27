@@ -11,24 +11,30 @@ const player = new Player(iframe);
 player.on('timeupdate', throttle(getLocalStorageData, 500));
 
 function getLocalStorageData(e) {
-    const stringData = JSON.stringify(e)
+    var stringData = JSON.stringify(e)
     localStorage.setItem(STORAGE_KEY, stringData)
 }
 
 
 // беремо час після паузи
-const timePaused = localStorage.getItem(STORAGE_KEY);
+let timePaused = localStorage.getItem(STORAGE_KEY);
     
+if (!timePaused) {
+  timePaused = { seconds: 0 };
+} else {
+  timePaused = JSON.parse(timePaused);
+}
 
-const parsedTime = JSON.parse(timePaused);
-
-const secondsEl = parsedTime.seconds;
 
 
-//починаємо відео з місця паузи після перезавантаження
+player.setCurrentTime(timePaused.seconds).then(function(seconds) {
+    // seconds = the actual time that the player seeked to
+}).catch(function(error) {
+    switch (error.name) {
+        case 'RangeError':
+            break;
 
-player.setCurrentTime(secondsEl).then(function (seconds) {
-
+        default:
+            break;
+    }
 });
-    
-

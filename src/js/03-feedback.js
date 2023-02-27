@@ -22,7 +22,7 @@ function onInputCreateFormData(e) {
 
 function onFormSubmit(e) {
     e.preventDefault();
-    e.currentTarget.reset();
+    e.target.reset();
     localStorage.removeItem(STORAGE_KEY);
     console.log(formData);
 }
@@ -34,10 +34,17 @@ function populateForm() {
 
     const parsedMessage = JSON.parse(savedMessage);
     
-    if (parsedMessage) {
-        refs.inputEmail.value = parsedMessage.email;
-        refs.textMessage.value = parsedMessage.message;
-    };
+    // if (!savedMessage) { return } else  { 
+    //     refs.inputEmail.value = parsedMessage.email;
+    //     refs.textMessage.value = parsedMessage.message;
+    // };
 
+    for ({else} in parsedMessage) {
+            refs.inputEmail.value = parsedMessage.email;
+    };
+    
+    for (message in parsedMessage) {
+        refs.textMessage.value = parsedMessage.message;
+    }
     // console.log(parsedMessage);
 }
