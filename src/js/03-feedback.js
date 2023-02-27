@@ -28,23 +28,11 @@ function onFormSubmit(e) {
 }
 
 function populateForm() {
-    const savedMessage = localStorage.getItem(STORAGE_KEY);
-
-    // console.log(savedMessage)
-
+  const savedMessage = localStorage.getItem(STORAGE_KEY);
+  if (savedMessage) {
     const parsedMessage = JSON.parse(savedMessage);
-    
-    // if (!savedMessage) { return } else  { 
-    //     refs.inputEmail.value = parsedMessage.email;
-    //     refs.textMessage.value = parsedMessage.message;
-    // };
-
-    for ({else} in parsedMessage) {
-            refs.inputEmail.value = parsedMessage.email;
-    };
-    
-    for (message in parsedMessage) {
-        refs.textMessage.value = parsedMessage.message;
-    }
-    // console.log(parsedMessage);
+    refs.inputEmail.value = parsedMessage.email;
+    refs.textMessage.value = parsedMessage.message;
+    formData = parsedMessage;
+  }
 }
