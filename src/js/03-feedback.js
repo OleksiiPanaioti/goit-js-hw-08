@@ -10,10 +10,14 @@ const refs = {
     textMessage: document.querySelector(".feedback-form textarea")
 }
 
+
+
 refs.form.addEventListener('submit', onFormSubmit);
 refs.form.addEventListener('input', onInputCreateFormData);
 
- populateForm();
+
+populateForm();
+
 
 function onInputCreateFormData(e) {
     formData[e.target.name] = e.target.value;
@@ -28,11 +32,12 @@ function onFormSubmit(e) {
 }
 
 function populateForm() {
-  const savedMessage = localStorage.getItem(STORAGE_KEY);
-  if (savedMessage) {
-    const parsedMessage = JSON.parse(savedMessage);
-    refs.inputEmail.value = parsedMessage.email;
-    refs.textMessage.value = parsedMessage.message;
-    formData = parsedMessage;
-  }
+    const savedFormData = localStorage.getItem(STORAGE_KEY);
+    
+    if (savedFormData) {
+        const parsedFormData = JSON.parse(savedFormData);
+        refs.inputEmail.value = parsedFormData.email || '';
+        refs.textMessage.value = parsedFormData.message || '';
+        formData = parsedFormData;
+    }
 }
